@@ -1,0 +1,25 @@
+{
+   "name": "soalweb_bot",
+   "version": "1.0.0",
+   "description": "Bot Telegram for SoalWeb",
+   "main": "index.js",
+   "scripts": {
+      "start": "node index.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "repository": {
+      "type": "git",
+      "url": "SoalWebBot_"
+   },
+   "keywords": [
+      "Bot",
+      "SoalWeb",
+      "Telegram"
+   ],
+   "author": "Rully Ihza Mahendra",
+   "license": "ISC",
+   "dependencies": {
+      "botgram": "^2.2.0",
+      "figlet": "^1.2.4"
+   }
+}
