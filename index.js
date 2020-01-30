@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Author Rully Ihza Mahendra
+// Built for SoalWeb
 
 const Botgram = require("botgram");
 const Figlet = require("figlet");
@@ -30,18 +31,18 @@ function handler(msg, reply, next) {
          const Admin = msg.from;
          const Member = msg.member;
 
-         const namaAdmin = Admin.username | Admin.firstname;
-         const namaMember =
-            Member.username | (Member.firstname + Member.lastname);
+         const namaAdmin = Admin.username
+            ? `@${Admin.username}`
+            : Admin.firstname + " " + Admin.lastname;
 
-         console.log(Admin);
-         console.log(Member);
+         const namaMember = Member.username
+            ? `@${Member.username}`
+            : Member.firstname + " " + Member.lastname;
 
-         reply.text(
-            `${capitalize(namaAdmin)}, kenapa kamu ngeluarin ${capitalize(
-               namaMember
-            )}?🤔`
-         );
+         //  console.log(Admin);
+         //  console.log(Member);
+
+         reply.text(`${namaAdmin}, kenapa kamu ngeluarin ${namaMember}?🤔`);
       }
 
       if (action == "new") {
@@ -49,7 +50,7 @@ function handler(msg, reply, next) {
          const namaUserBaru =
             userBaru.username | (userBaru.firstname + userBaru.lastname);
 
-         reply.text(`Selamat Datang, ${capitalize(namaUserBaru)}!🤗`);
+         reply.text(`Selamat Datang, ${namaUserBaru}!🤗`);
       }
    }
 }
@@ -58,23 +59,25 @@ bot.all(handler);
 bot.edited.all(handler);
 
 // /start
-bot.command("start", "help", (msg, reply) =>
-   reply.text("To schedule an alert, do: /alert <seconds> <text>")
-);
+// bot.command("start", "help", (msg, reply) =>
+//    reply.text("To schedule an alert, do: /alert <seconds> <text>")
+// );
 
 // /halo
 bot.command("halo", (msg, reply) => {
-   reply.text(`
-   Hallo, ${msg.user.name}🤗 \nAda yang bisa saya bantu?
+   const { user } = msg;
+   const namaUser = user.firstname + " " + user.lastname;
 
-   
+   reply.text(`
+   Hallo, ${namaUser}🤗 \nAda yang bisa saya bantu?\n
+   Silakan ketik \`/list_perintah\` untuk melihat semua perintah.
    `);
 });
 
 // /member
 bot.command("member", (msg, reply) => {
    reply.text(`
-    || Member of Soalweb ||
+    **|| Member of Soalweb ||**
 
     1. @Novianpmb
     2. @Tonul
@@ -87,7 +90,7 @@ bot.command("member", (msg, reply) => {
 // /website
 bot.command("member", (msg, reply) => {
    reply.text(`
-    || Website Official SoalWeb ||
+    **|| Website Official SoalWeb ||**
 
     https://www.soalweb.com/
     `);
@@ -96,13 +99,28 @@ bot.command("member", (msg, reply) => {
 // /contact
 bot.command("contact", (msg, reply) => {
    reply.text(`
-     || Contact ||
+     **|| Contact ||**
 
      Kamu bisa kontak kita kesini 😘🤗
      💌 : soalweb.mail@gmail.com
      📞 : - Vian (+628985929161)
           - Vira (+6285875666255)
      `);
+});
+
+bot.command("list_perintah", (msg, reply) => {
+   reply.text(`
+   **|| Perintah Yang Tersedia ||**
+
+   \`/halo\` => untuk menyapa bot.
+   \`/deskripsi\` => untuk melihat deskripsi singkat tentang SoalWeb.
+   \`/member\` => untuk melihat daftar member SoalWeb.
+   \`/website\` => link website official SoalWeb.
+   \`/contact\` => Kontak Kami.
+   \`/list_perintah\` => untuk memunculkan menu ini lagi.
+
+   Silakan dicoba deh.. 😍😉
+   `);
 });
 
 // Helper
